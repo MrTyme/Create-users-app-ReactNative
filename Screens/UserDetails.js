@@ -2,7 +2,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 
-const UserDetails = () => {
+const UserDetails = (props) => {
+    
+    //obtencion del usuario por id
+
+
+
     return (
         <View>
             <Text>User Details</Text>

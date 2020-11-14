@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, ScrollView, Button } from 'react-native';
 import firebase from '../database/Firebase';
-import { ListItem, Avatar } from 'react-native-elements'
-import { log } from 'react-native-reanimated';
-
+import { ListItem, Avatar } from 'react-native-elements';
 
 const UserList = (props) => {
     
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState([]);
+    //el useState debe guardar el array de la db
     
     useEffect(() => {
         //llamara a la ejecucion de firebase
@@ -23,7 +22,6 @@ const UserList = (props) => {
 
                 const {name,email,phone} = doc.data();
                 //extraccion de datos.
-
 
                 users.push({
                     id:doc.id,
@@ -42,17 +40,48 @@ const UserList = (props) => {
 
     return (
         <ScrollView>
-            <Button title='CREATE USERS' onPress={
-                () => {props.navigation.navigate('CreateUsers')}
+            <Button title='CREATE USERS' 
+            onPress={() => {props.navigation.navigate('CreateUsers')}
             }/>
 
             {
-                users.map()
+                users.map(
+                    users => {
+                        return (
+                            <ListItem key={users.id}
+                                buttomDivider
+                                onPress = {
+                                    () => {
+                                        props.navigation.navigate('UserDetails');
+                                        userId: users.id
+                                    }
+                                }
+                            >
+                                <ListItem.Chevron/>
+                                
+                                <Avatar 
+                                    source = {{uri : 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}}
+                                    rounded
+                                />
+
+                                <ListItem.Content>
+                                    <ListItem.Title>
+                                        {users.name}
+                                    </ListItem.Title>
+                                    <ListItem.Subtitle>
+                                        {users.email}
+                                    </ListItem.Subtitle>
+                                </ListItem.Content>
+                            </ListItem>
+                        )
+                    }
+                )
             }
+            
         </ScrollView>
     );
 }
 
-//creacion de la vista de lista de usuarios
+//creacion de vista de la lista de usuarios
 
 export default UserList;
