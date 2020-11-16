@@ -52,8 +52,10 @@ const UserList = (props) => {
                                 buttomDivider
                                 onPress = {
                                     () => {
-                                        props.navigation.navigate('UserDetails');
-                                        userId: users.id
+                                        props.navigation.navigate('UserDetails', 
+                                        { 
+                                            usersId: users.id
+                                        });
                                     }
                                 }
                             >

@@ -20,9 +20,17 @@ function MyStack() {
     //creamos la navegacion de pantallas
     //y dentro creamos las pantallas
     <Stack.Navigator>
-      <Stack.Screen name = "UserList" component = {UserList}/>
-      <Stack.Screen name = "CreateUsers" component = {CreateUsers}/>
-      <Stack.Screen name = "UserDetails" component = {UserDetails}/>
+      <Stack.Screen name = "UserList" 
+      component = {UserList} 
+      options = {{title: 'Users List'}}/>
+
+      <Stack.Screen name = "CreateUsers" 
+      component = {CreateUsers} 
+      options = {{title: 'Create a New User'}}/>
+
+      <Stack.Screen name = "UserDetails" 
+      component = {UserDetails} 
+      options = {{title: 'User Details'}}/>
     </Stack.Navigator>
   );
 }

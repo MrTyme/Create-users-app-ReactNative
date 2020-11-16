@@ -19,8 +19,7 @@ const CreateUsers = (props) => {
 
     const handleChangeText = (name, value) => {
         setState({...state, [name] : value});
-        //desglosamos el state para mantener al inicio el estado actual
-                
+        //desglosamos el state para mantener al inicio el estado actual          
     }
 
     const CreateNewUser = async () => {
