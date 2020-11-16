@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput, ScrollView, Button, ActivityIndicator} from 'react-native';
+import { View, StyleSheet, TextInput, ScrollView, Button, ActivityIndicator, Alert} from 'react-native';
 import firebase from '../database/Firebase';
 
 const UserDetails = (props) => {
 
-    //creacion del state
-    const [user, setUser] = useState({
+    //constante inicial
+    const initialState = {
         id:'',
         name:'',
         email:'',
         phone:''
-    });
+    }
+
+    //creacion del state
+    const [user, setUser] = useState(initialState);
 
     //creacion de loader
     const [Loading, setLoading] = useState(true);
@@ -49,10 +52,35 @@ const UserDetails = (props) => {
     }
 
 
+    //eliminacion de usuarios.
     const deleteUser = async ()=> {
         const dbRef = firebase.db.collection('users').doc(props.route.params.usersId);
         await dbRef.delete();
         props.navigation.navigate('UserList');
+    }
+
+    //actualizacion de usuario
+    const UpdateUser = async () => {
+        const dbRef = firebase.db.collection('users').doc(user.id);
+        //en este caso se puede hacer desde el props o desde el user.id
+
+        await dbRef.set({
+            name: user.name,
+            email: user.email,
+            phone: user.phone
+        });
+
+        setUser(initialState);
+        props.navigation.navigate('UserList');
+    }
+
+
+    //confirmacion de eliminacion
+    const openConfirmationAlert = () => {
+        Alert.alert('Remove the User', 'Are you sure?', [
+            {text: 'Yes', onPress: () => deleteUser()},
+            {text: 'no', onPress: () => console.log(false)}
+        ]);
     }
 
 
@@ -95,13 +123,13 @@ const UserDetails = (props) => {
                 <Button 
                     color= '#19AC52'
                     title="Update User" 
-                    onPress = {() => alert('works')}/>
+                    onPress = {() => UpdateUser()}/>
             </View>
            <View>
                 <Button 
                     color= '#E37399'
                     title="Delete User" 
-                    onPress = {() => deleteUser()}/>
+                    onPress = {() => openConfirmationAlert()}/>
            </View>
 
        </ScrollView>
