@@ -5,7 +5,10 @@ import 'firebase/firestore';
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  //non info
+  /*
+    use the information on cloud firestore
+    and use this configuration for automatic process
+  */
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
